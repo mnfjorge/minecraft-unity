@@ -97,6 +97,7 @@ public class Chunk
         vertexIndex = 0;
         vertices.Clear();
         triangles.Clear();
+        transparentTriangles.Clear();
         uvs.Clear();
     }
 
@@ -137,9 +138,9 @@ public class Chunk
 
         voxelMap[xCheck, yCheck, zCheck] = newId;
 
-        UpdateChunk();
-
         UpdateSurroundingVoxels(xCheck, yCheck, zCheck);
+
+        UpdateChunk();
     }
 
     void UpdateSurroundingVoxels(int x, int y, int z)
@@ -164,7 +165,7 @@ public class Chunk
         int z = Mathf.FloorToInt(pos.z);
 
         if (!IsVoxelInChunk(x, y, z))
-            return world.CheckIfVoxelTransparent(pos);
+            return world.CheckIfVoxelTransparent(pos + position);
 
         return world.blockTypes[voxelMap[x, y, z]].isTransparent;
     }
