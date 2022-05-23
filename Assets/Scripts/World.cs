@@ -33,9 +33,11 @@ public class World : MonoBehaviour
 
     public GameObject debugScreen;
 
+    public GameObject creativeInventoryWindow;
+    public GameObject cursorSlot;
+
     void Start()
     {
-
         Random.InitState(seed);
 
         spawnPosition = new Vector3((VoxelData.WorldSizeInChunks / 2) * VoxelData.ChunkWidth, VoxelData.ChunkHeight - 50, (VoxelData.WorldSizeInChunks / 2) * VoxelData.ChunkWidth);
@@ -236,7 +238,18 @@ public class World : MonoBehaviour
         set
         {
             _inUI = value;
-
+            if (_inUI)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                creativeInventoryWindow.SetActive(true);
+                cursorSlot.SetActive(true);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                creativeInventoryWindow.SetActive(false);
+                cursorSlot.SetActive(false);
+            }
         }
     }
 
