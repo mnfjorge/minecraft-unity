@@ -58,8 +58,13 @@ public class Chunk
         chunkObject.name = "Chunk " + coord.x + ", " + coord.z;
         position = chunkObject.transform.position;
 
-        Thread myThread = new Thread(new ThreadStart(PopulateVoxelMap));
-        myThread.Start();
+        if (world.enableThreading)
+        {
+            Thread myThread = new Thread(new ThreadStart(PopulateVoxelMap));
+            myThread.Start();
+        }
+        else
+            PopulateVoxelMap();
     }
 
     void PopulateVoxelMap()
@@ -83,8 +88,13 @@ public class Chunk
 
     public void UpdateChunk()
     {
-        Thread myThread = new Thread(new ThreadStart(_updateChunk));
-        myThread.Start();
+        if (world.enableThreading)
+        {
+            Thread myThread = new Thread(new ThreadStart(_updateChunk));
+            myThread.Start();
+        }
+        else
+            _updateChunk();
     }
 
     private void _updateChunk()

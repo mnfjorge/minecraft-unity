@@ -5,8 +5,12 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
 
+    [Header("World Generation Values")]
     public int seed;
     public BiomeAttributes biome;
+
+    [Header("Performance")]
+    public bool enableThreading;
 
     [Range(0.95f, 0)]
     public float globalLightLevel;
@@ -128,12 +132,7 @@ public class World : MonoBehaviour
 
         while (modifications.Count > 0)
         {
-            Queue<VoxelMod> queue;
-
-            lock (modifications)
-            {
-                queue = modifications.Dequeue();
-            }
+            Queue<VoxelMod> queue = modifications.Dequeue();
 
             while (queue.Count > 0)
             {
