@@ -1975,8 +1975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 12345
   biome: {fileID: 11400000, guid: a25c98dfb9cd4484dab36eff19eb2f28, type: 2}
-  enableThreading: 0
-  globalLightLevel: 0
+  enableThreading: 1
+  globalLightLevel: 1
   day: {r: 0, g: 1, b: 0.9843137, a: 0}
   night: {r: 0, g: 0.003921569, b: 0.3019608, a: 0}
   player: {fileID: 530727421}
