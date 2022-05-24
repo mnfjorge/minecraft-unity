@@ -460,6 +460,7 @@ public class Settings
     [Header("Performance")]
     public int ViewDistance = 5;
     public bool enableThreading = true;
+    public bool enableAnimatedChunks = false;
 
     [Header("Controls")]
     [Range(0.1f, 10f)]
