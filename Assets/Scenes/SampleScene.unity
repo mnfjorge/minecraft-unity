@@ -1949,9 +1949,13 @@ MonoBehaviour:
     version: 0.0.1
     ViewDistance: 4
     enableThreading: 1
+    enableAnimatedChunks: 0
     mouseSensitivity: 2
     seed: 89745
-  biome: {fileID: 11400000, guid: a25c98dfb9cd4484dab36eff19eb2f28, type: 2}
+  biomes:
+  - {fileID: 11400000, guid: a25c98dfb9cd4484dab36eff19eb2f28, type: 2}
+  - {fileID: 11400000, guid: 7de568d5e74f3434ca5fe75fb8c06213, type: 2}
+  - {fileID: 11400000, guid: c2c315df76fddc142be12e1baf7da9e0, type: 2}
   globalLightLevel: 1
   day: {r: 0, g: 1, b: 0.9843137, a: 0}
   night: {r: 0, g: 0.003921569, b: 0.3019608, a: 0}
@@ -2092,6 +2096,28 @@ MonoBehaviour:
     bottomFaceTexture: 16
     leftFaceTexture: 16
     rightFaceTexture: 16
+  - blockName: Cactus
+    isSolid: 1
+    renderNeighborFaces: 1
+    transparency: 0
+    icon: {fileID: -1910896330, guid: 1839608d55b9cdb48b4b19fa2e799a22, type: 3}
+    backFaceTexture: 18
+    frontFaceTexture: 18
+    topFaceTexture: 19
+    bottomFaceTexture: 19
+    leftFaceTexture: 18
+    rightFaceTexture: 18
+  - blockName: Cactus Top
+    isSolid: 1
+    renderNeighborFaces: 1
+    transparency: 0
+    icon: {fileID: -1910896330, guid: 1839608d55b9cdb48b4b19fa2e799a22, type: 3}
+    backFaceTexture: 18
+    frontFaceTexture: 18
+    topFaceTexture: 17
+    bottomFaceTexture: 19
+    leftFaceTexture: 18
+    rightFaceTexture: 18
   debugScreen: {fileID: 687394976}
   creativeInventoryWindow: {fileID: 1609825287}
   cursorSlot: {fileID: 755750678}
