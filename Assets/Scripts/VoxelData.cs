@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class VoxelData {
+public static class VoxelData
+{
     public static readonly int ChunkWidth = 16;
     public static readonly int ChunkHeight = 128;
     public static readonly int WorldSizeInChunks = 100;
@@ -14,12 +15,19 @@ public static class VoxelData {
 
     public static int seed;
 
-    public static int WorldSizeInVoxels {
+    public static int WorldCentre
+    {
+        get { return (WorldSizeInChunks * ChunkWidth) / 2; }
+    }
+
+    public static int WorldSizeInVoxels
+    {
         get { return WorldSizeInChunks * ChunkWidth; }
     }
 
     public static readonly int TextureAtlasSizeInBlocks = 16;
-    public static float NormalizedBlockTextureSize {
+    public static float NormalizedBlockTextureSize
+    {
         get { return 1f / TextureAtlasSizeInBlocks; }
     }
 

@@ -1332,6 +1332,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &821291443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 821291444}
+  - component: {fileID: 821291445}
+  m_Layer: 0
+  m_Name: Clouds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &821291444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821291443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 439.47818, y: 470.3947, z: -1.6643664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821291445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821291443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62264ed540e79c8489ed8a6f92daccf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cloudHeight: 100
+  cloudPattern: {fileID: 2800000, guid: c857293b5262fcd419f746b05b0ae441, type: 3}
+  cloudMaterial: {fileID: 2100000, guid: d7ebd3eed718dfd4dad8346f521c560b, type: 2}
+  world: {fileID: 1581787128}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,7 +1999,6 @@ MonoBehaviour:
     enableThreading: 1
     enableAnimatedChunks: 0
     mouseSensitivity: 2
-    seed: 89745
   biomes:
   - {fileID: 11400000, guid: a25c98dfb9cd4484dab36eff19eb2f28, type: 2}
   - {fileID: 11400000, guid: 7de568d5e74f3434ca5fe75fb8c06213, type: 2}
@@ -2118,6 +2165,7 @@ MonoBehaviour:
     bottomFaceTexture: 19
     leftFaceTexture: 18
     rightFaceTexture: 18
+  clouds: {fileID: 821291445}
   debugScreen: {fileID: 687394976}
   creativeInventoryWindow: {fileID: 1609825287}
   cursorSlot: {fileID: 755750678}
