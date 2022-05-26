@@ -81,16 +81,18 @@ public class World : MonoBehaviour
         Shader.SetGlobalFloat("minGlobalLightLevel", VoxelData.minLightLevel);
         Shader.SetGlobalFloat("maxGlobalLightLevel", VoxelData.maxLightLevel);
 
-        if (settings.enableThreading)
-        {
-            ChunkUpdateThread = new Thread(new ThreadStart(ThreadedUpdate));
-            ChunkUpdateThread.Start();
-        }
+        LoadWorld();
 
         SetGlobalLightValue();
         spawnPosition = new Vector3(VoxelData.WorldCentre, VoxelData.ChunkHeight - 50, VoxelData.WorldCentre);
         GenerateWorld();
         playerLastChunkCoord = GetChunkCoordFromVector3(player.position);
+
+        if (settings.enableThreading)
+        {
+            ChunkUpdateThread = new Thread(new ThreadStart(ThreadedUpdate));
+            ChunkUpdateThread.Start();
+        }
     }
 
     public void SetGlobalLightValue()
