@@ -501,6 +501,7 @@ public class Settings
     public int ViewDistance = 8;
     public bool enableThreading = true;
     public bool enableAnimatedChunks = false;
+    public CloudStyle clouds = CloudStyle.Fancy;
 
     [Header("Controls")]
     [Range(0.1f, 10f)]
