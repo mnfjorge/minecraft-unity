@@ -55,7 +55,7 @@ public class TitleMenu : MonoBehaviour
 
     public void EnterSettings()
     {
-        viewDistanceSlider.value = settings.ViewDistance;
+        viewDistanceSlider.value = settings.viewDistance;
         UpdateViewDistanceSlider();
         mouseSensitivitySlider.value = settings.mouseSensitivity;
         UpdateMouseSlider();
@@ -69,7 +69,7 @@ public class TitleMenu : MonoBehaviour
 
     public void LeaveSettings()
     {
-        settings.ViewDistance = (int)viewDistanceSlider.value;
+        settings.viewDistance = (int)viewDistanceSlider.value;
         settings.mouseSensitivity = mouseSensitivitySlider.value;
         settings.enableThreading = threadingToggle.isOn;
         settings.enableAnimatedChunks = chunkAnimationToggle.isOn;
