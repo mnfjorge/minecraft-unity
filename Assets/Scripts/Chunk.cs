@@ -29,10 +29,7 @@ public class Chunk
     public Chunk(ChunkCoord coord)
     {
         this.coord = coord;
-    }
-
-    public void Init()
-    {
+     
         chunkObject = new GameObject();
         meshFilter = chunkObject.AddComponent<MeshFilter>();
         meshRenderer = chunkObject.AddComponent<MeshRenderer>();
