@@ -424,6 +424,7 @@ public class BlockType
 {
     public string blockName;
     public bool isSolid;
+    public VoxelMeshData meshData;
     public bool renderNeighborFaces;
     public byte opacity;
     public Sprite icon;

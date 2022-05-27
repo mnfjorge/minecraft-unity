@@ -146,47 +146,34 @@ public class Chunk
 
         for (int p = 0; p < 6; p++)
         {
-            var neighbor = chunkData.map[x, y, z].neighbours[p];
+            var neighbour = chunkData.map[x, y, z].neighbours[p];
 
-            if (neighbor != null && World.Instance.blockTypes[neighbor.id].renderNeighborFaces)
+            if (neighbour != null && neighbour.properties.renderNeighborFaces)
             {
-                vertices.Add(pos + VoxelData.voxelVerts[VoxelData.voxelTris[p, 0]]);
-                vertices.Add(pos + VoxelData.voxelVerts[VoxelData.voxelTris[p, 1]]);
-                vertices.Add(pos + VoxelData.voxelVerts[VoxelData.voxelTris[p, 2]]);
-                vertices.Add(pos + VoxelData.voxelVerts[VoxelData.voxelTris[p, 3]]);
+                float lightLevel = neighbour.lightAsFloat;
+                int faceVertCount = 0;
 
-                for (int i = 0; i <= 3; i++)
-                    normals.Add(VoxelData.faceChecks[p]);
-
-                AddTexture(voxel.properties.GetTextureId(p));
-
-                float lightLevel = neighbor.lightAsFloat;
-
-                colors.Add(new Color(0, 0, 0, lightLevel));
-                colors.Add(new Color(0, 0, 0, lightLevel));
-                colors.Add(new Color(0, 0, 0, lightLevel));
-                colors.Add(new Color(0, 0, 0, lightLevel));
-
-                if (!neighbor.properties.renderNeighborFaces)
+                for (int i = 0; i < voxel.properties.meshData.faces[p].vertData.Length; i++)
                 {
-                    triangles.Add(vertexIndex + 0);
-                    triangles.Add(vertexIndex + 1);
-                    triangles.Add(vertexIndex + 2);
-                    triangles.Add(vertexIndex + 2);
-                    triangles.Add(vertexIndex + 1);
-                    triangles.Add(vertexIndex + 3);
+                    vertices.Add(pos + voxel.properties.meshData.faces[p].vertData[i].position);
+                    normals.Add(voxel.properties.meshData.faces[p].normal);
+                    colors.Add(new Color(0, 0, 0, lightLevel));
+                    AddTexture(voxel.properties.GetTextureId(p), voxel.properties.meshData.faces[p].vertData[i].uv);
+                    faceVertCount++;
+                }
+
+                if (!voxel.properties.renderNeighborFaces)
+                {
+                    for (int i = 0; i < voxel.properties.meshData.faces[p].triangles.Length; i++)
+                        triangles.Add(vertexIndex + voxel.properties.meshData.faces[p].triangles[i]);
                 }
                 else
                 {
-                    transparentTriangles.Add(vertexIndex + 0);
-                    transparentTriangles.Add(vertexIndex + 1);
-                    transparentTriangles.Add(vertexIndex + 2);
-                    transparentTriangles.Add(vertexIndex + 2);
-                    transparentTriangles.Add(vertexIndex + 1);
-                    transparentTriangles.Add(vertexIndex + 3);
+                    for (int i = 0; i < voxel.properties.meshData.faces[p].triangles.Length; i++)
+                        transparentTriangles.Add(vertexIndex + voxel.properties.meshData.faces[p].triangles[i]);
                 }
 
-                vertexIndex += 4;
+                vertexIndex += faceVertCount;
             }
         }
     }
@@ -206,7 +193,7 @@ public class Chunk
         meshFilter.mesh = mesh;
     }
 
-    void AddTexture(int textureId)
+    void AddTexture(int textureId, Vector2 uv)
     {
         float y = textureId / VoxelData.TextureAtlasSizeInBlocks;
         float x = textureId - (y * VoxelData.TextureAtlasSizeInBlocks);
@@ -216,10 +203,10 @@ public class Chunk
 
         y = 1f - y - VoxelData.NormalizedBlockTextureSize;
 
+        x += VoxelData.NormalizedBlockTextureSize * uv.x;
+        y += VoxelData.NormalizedBlockTextureSize * uv.y;
+
         uvs.Add(new Vector2(x, y));
-        uvs.Add(new Vector2(x, y + VoxelData.NormalizedBlockTextureSize));
-        uvs.Add(new Vector2(x + VoxelData.NormalizedBlockTextureSize, y));
-        uvs.Add(new Vector2(x + VoxelData.NormalizedBlockTextureSize, y + VoxelData.NormalizedBlockTextureSize));
     }
 }
 
