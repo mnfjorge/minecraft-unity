@@ -29,7 +29,7 @@ public class World : MonoBehaviour
     public ChunkCoord playerChunkCoord;
     ChunkCoord playerLastChunkCoord;
 
-    public List<Chunk> chunksToUpdate = new List<Chunk>();
+    List<Chunk> chunksToUpdate = new List<Chunk>();
     public Queue<Chunk> chunksToDraw = new Queue<Chunk>();
 
     bool applyingModifications = false;
@@ -136,6 +136,25 @@ public class World : MonoBehaviour
             for (int z = (VoxelData.WorldSizeInChunks / 2) - settings.loadDistance; z < (VoxelData.WorldSizeInChunks / 2) + settings.loadDistance; z++)
             {
                 worldData.LoadChunk(new Vector2Int(x, z));
+            }
+        }
+    }
+
+    public void AddChunkToUpdate(Chunk chunk)
+    {
+        AddChunkToUpdate(chunk, false);
+    }
+
+    public void AddChunkToUpdate(Chunk chunk, bool insert)
+    {
+        lock (ChunkUpdateThreadLock)
+        {
+            if (!chunksToUpdate.Contains(chunk))
+            {
+                if (insert)
+                    chunksToUpdate.Insert(0, chunk);
+                else
+                    chunksToUpdate.Add(chunk);
             }
         }
     }
@@ -406,7 +425,7 @@ public class BlockType
     public string blockName;
     public bool isSolid;
     public bool renderNeighborFaces;
-    public float transparency;
+    public byte opacity;
     public Sprite icon;
 
     [Header("Texture Values")]

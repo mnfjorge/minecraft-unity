@@ -10,7 +10,7 @@ public static class Lighting
         {
             for (int z = 0; z < VoxelData.ChunkWidth; z++)
             {
-                CastNaturalLight(chunkData, x, VoxelData.ChunkHeight - 1, z);
+                CastNaturalLight(chunkData, x, z, VoxelData.ChunkHeight - 1);
             }
         }
     }
@@ -29,19 +29,19 @@ public static class Lighting
         {
             var voxel = chunkData.map[x, y, z];
 
-            //if (obstructed)
-            //{
-            //    voxel.light = 0;
-            //}
-            //else if (voxel.properties.opacity > 0)
-            //{
-            //    voxel.light = 0;
-            //    obstructed = true;
-            //}
-            //else
-            //{
-            //    voxel.light = 15;
-            //}
+            if (obstructed)
+            {
+                voxel.light = 0;
+            }
+            else if (voxel.properties.opacity > 0)
+            {
+                voxel.light = 0;
+                obstructed = true;
+            }
+            else
+            {
+                voxel.light = 15;
+            }
         }
     }
 }
