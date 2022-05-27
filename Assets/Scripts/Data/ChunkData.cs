@@ -59,7 +59,7 @@ public class ChunkData
         World.Instance.worldData.AddToModifiedChunkList(this);
     }
 
-    public void ModifyVoxel(Vector3Int pos, byte id)
+    public void ModifyVoxel(Vector3Int pos, byte id, int orientation)
     {
         if (map[pos.x, pos.y, pos.z].id == id)
             return;
@@ -70,6 +70,7 @@ public class ChunkData
         byte oldOpacity = voxel.properties.opacity;
 
         voxel.id = id;
+        voxel.orientation = orientation;
 
         if (voxel.properties.opacity != oldOpacity &&
             (pos.y == VoxelData.ChunkHeight - 1 || map[pos.x, pos.y + 1, pos.z].light == 15))

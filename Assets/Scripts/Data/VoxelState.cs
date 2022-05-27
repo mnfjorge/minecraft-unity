@@ -6,6 +6,7 @@ using UnityEngine;
 public class VoxelState
 {
     public byte id;
+    public int orientation;
     [System.NonSerialized] byte _light;
     [System.NonSerialized] public ChunkData chunkData;
     [System.NonSerialized] public VoxelNeighbours neighbours;
@@ -54,6 +55,7 @@ public class VoxelState
     public VoxelState(byte id, ChunkData chunkData, Vector3Int position)
     {
         this.id = id;
+        this.orientation = 1;
         this.chunkData = chunkData;
         this.neighbours = new VoxelNeighbours(this);
         this.position = position;

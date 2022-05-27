@@ -78,7 +78,7 @@ public class WorldData
         return false;
     }
 
-    public void SetVoxel(Vector3 pos, byte value)
+    public void SetVoxel(Vector3 pos, byte value, int orientation)
     {
         if (!IsVoxelInWorld(pos))
             return;
@@ -93,7 +93,7 @@ public class WorldData
 
         Vector3Int voxel = new Vector3Int((int)(pos.x - x), (int)pos.y, (int)(pos.z - z));
 
-        chunk.ModifyVoxel(voxel, value);
+        chunk.ModifyVoxel(voxel, value, orientation);
     }
 
     public VoxelState GetVoxel(Vector3 pos)

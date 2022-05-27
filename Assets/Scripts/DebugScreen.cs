@@ -34,6 +34,26 @@ public class DebugScreen : MonoBehaviour
         debugText += "\n";
         debugText += "Chunk: " + (world.playerChunkCoord.x - halfWorldSizeInChunks) + "," + (world.playerChunkCoord.z - halfWorldSizeInChunks);
 
+        string direction = "";
+        switch (world._player.orientation)
+        {
+            case 0:
+                direction = "South";
+                break;
+            case 1:
+                direction = "North";
+                break;
+            case 5:
+                direction = "West";
+                break;
+            case 4:
+                direction = "East";
+                break;
+        }
+
+        debugText += "\n";
+        debugText += "Direction Facing: " + direction;
+
         text.text = debugText;
 
         if (timer > 1f)

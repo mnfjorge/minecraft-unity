@@ -2110,18 +2110,18 @@ MonoBehaviour:
     bottomFaceTexture: 4
     leftFaceTexture: 4
     rightFaceTexture: 4
-  - blockName: Brick
+  - blockName: Furnace
     isSolid: 1
     meshData: {fileID: 11400000, guid: 45ddf234c2b09c64eb9c61df41c7accd, type: 2}
     renderNeighborFaces: 0
     opacity: 15
     icon: {fileID: 557209618, guid: 1839608d55b9cdb48b4b19fa2e799a22, type: 3}
-    backFaceTexture: 11
-    frontFaceTexture: 11
-    topFaceTexture: 11
-    bottomFaceTexture: 11
-    leftFaceTexture: 11
-    rightFaceTexture: 11
+    backFaceTexture: 13
+    frontFaceTexture: 12
+    topFaceTexture: 15
+    bottomFaceTexture: 15
+    leftFaceTexture: 13
+    rightFaceTexture: 13
   - blockName: Half Slab
     isSolid: 1
     meshData: {fileID: 11400000, guid: 24c657944527d1c4abba451a80b4b3fb, type: 2}
