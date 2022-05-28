@@ -15,7 +15,8 @@ public class Chunk
     List<Vector3> vertices = new List<Vector3>();
     List<int> triangles = new List<int>();
     List<int> transparentTriangles = new List<int>();
-    Material[] materials = new Material[2];
+    List<int> waterTriangles = new List<int>();
+    Material[] materials = new Material[3];
     List<Vector2> uvs = new List<Vector2>();
     List<Color> colors = new List<Color>();
     List<Vector3> normals = new List<Vector3>();
@@ -36,6 +37,7 @@ public class Chunk
 
         materials[0] = World.Instance.material;
         materials[1] = World.Instance.transparentMaterial;
+        materials[2] = World.Instance.waterMaterial;
         meshRenderer.materials = materials;
         //meshRenderer.material = World.Instance.material;
 
@@ -192,7 +194,11 @@ public class Chunk
 
             var neighbour = chunkData.map[x, y, z].neighbours[translatedP];
 
-            if (neighbour != null && neighbour.properties.renderNeighborFaces)
+            if (
+                neighbour != null
+                && neighbour.properties.renderNeighborFaces
+                && !(voxel.properties.isWater && chunkData.map[x, y + 1, z].properties.isWater)
+                )
             {
                 float lightLevel = neighbour.lightAsFloat;
                 int faceVertCount = 0;
@@ -204,7 +210,10 @@ public class Chunk
                     vertices.Add(pos + vertData.GetRotatedPosition(new Vector3(0, rotation, 0)));
                     normals.Add(VoxelData.faceChecks[p]);
                     colors.Add(new Color(0, 0, 0, lightLevel));
-                    AddTexture(voxel.properties.GetTextureId(p), vertData.uv);
+                    if (voxel.properties.isWater)
+                        uvs.Add(voxel.properties.meshData.faces[p].vertData[i].uv);
+                    else
+                        AddTexture(voxel.properties.GetTextureId(p), vertData.uv);
                     faceVertCount++;
                 }
 
@@ -215,8 +224,16 @@ public class Chunk
                 }
                 else
                 {
-                    for (int i = 0; i < voxel.properties.meshData.faces[p].triangles.Length; i++)
-                        transparentTriangles.Add(vertexIndex + voxel.properties.meshData.faces[p].triangles[i]);
+                    if (voxel.properties.isWater)
+                    {
+                        for (int i = 0; i < voxel.properties.meshData.faces[p].triangles.Length; i++)
+                            waterTriangles.Add(vertexIndex + voxel.properties.meshData.faces[p].triangles[i]);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < voxel.properties.meshData.faces[p].triangles.Length; i++)
+                            transparentTriangles.Add(vertexIndex + voxel.properties.meshData.faces[p].triangles[i]);
+                    }
                 }
 
                 vertexIndex += faceVertCount;
@@ -228,10 +245,10 @@ public class Chunk
     {
         Mesh mesh = new Mesh();
         mesh.vertices = vertices.ToArray();
-        mesh.subMeshCount = 2;
+        mesh.subMeshCount = 3;
         mesh.SetTriangles(triangles.ToArray(), 0);
         mesh.SetTriangles(transparentTriangles.ToArray(), 1);
-        //mesh.triangles = triangles.ToArray();
+        mesh.SetTriangles(waterTriangles.ToArray(), 2);
         mesh.uv = uvs.ToArray();
         mesh.colors = colors.ToArray();
         mesh.normals = normals.ToArray();

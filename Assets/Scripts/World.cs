@@ -22,6 +22,7 @@ public class World : MonoBehaviour
 
     public Material material;
     public Material transparentMaterial;
+    public Material waterMaterial;
     public BlockType[] blockTypes;
 
     Chunk[,] chunks = new Chunk[VoxelData.WorldSizeInChunks, VoxelData.WorldSizeInChunks];
@@ -377,7 +378,13 @@ public class World : MonoBehaviour
         else if (yPos < terrainHeight && yPos > terrainHeight - 4)
             voxelValue = biome.subSurfaceBlock;
         else if (yPos > terrainHeight)
-            return 0;
+        {
+            // water level
+            if (yPos < 51)
+                return 14;
+            else
+                return 0;
+        }
         else
             voxelValue = 2;
 
@@ -429,6 +436,7 @@ public class BlockType
     public bool isSolid;
     public VoxelMeshData meshData;
     public bool renderNeighborFaces;
+    public bool isWater;
     public byte opacity;
     public Sprite icon;
 
