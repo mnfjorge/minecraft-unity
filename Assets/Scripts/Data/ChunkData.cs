@@ -78,6 +78,16 @@ public class ChunkData
             Lighting.CastNaturalLight(this, pos.x, pos.z, pos.y + 1);
         }
 
+        if (voxel.properties.isActive && BlockBehaviour.Active(voxel))
+            voxel.chunkData.chunk.AddActiveVoxel(voxel);
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (voxel.neighbours[i] != null)
+                if (voxel.neighbours[i].properties.isActive && BlockBehaviour.Active(voxel.neighbours[i]))
+                    voxel.neighbours[i].chunkData.chunk.AddActiveVoxel(voxel.neighbours[i]);
+        }
+
         World.Instance.worldData.AddToModifiedChunkList(this);
 
         if (chunk != null)

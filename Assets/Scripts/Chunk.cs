@@ -27,6 +27,8 @@ public class Chunk
 
     ChunkData chunkData;
 
+    List<VoxelState> activeVoxels = new List<VoxelState>();
+
     public Chunk(ChunkCoord coord)
     {
         this.coord = coord;
@@ -49,10 +51,34 @@ public class Chunk
         chunkData = World.Instance.worldData.RequestChunk(new Vector2Int((int)position.x, (int)position.z), true);
         chunkData.chunk = this;
 
+        for (int y = 0; y < VoxelData.ChunkHeight; y++)
+        {
+            for (int x = 0; x < VoxelData.ChunkWidth; x++)
+            {
+                for (int z = 0; z < VoxelData.ChunkWidth; z++)
+                {
+                    var voxel = chunkData.map[x, y, z];
+                    if (voxel.properties.isActive)
+                        AddActiveVoxel(voxel);
+                }
+            }
+        }
+
         World.Instance.AddChunkToUpdate(this);
 
         if (World.Instance.settings.enableAnimatedChunks)
             chunkObject.AddComponent<ChunkLoadAnimation>();
+    }
+
+    public void TickUpdate()
+    {
+        for (int i = activeVoxels.Count - 1; i > -1; i--)
+        {
+            if (!BlockBehaviour.Active(activeVoxels[i]))
+                RemoveActiveVoxel(activeVoxels[i]);
+            else
+                BlockBehaviour.Behave(activeVoxels[i]);
+        }
     }
 
     public void UpdateChunk()
@@ -73,6 +99,24 @@ public class Chunk
         }
 
         World.Instance.chunksToDraw.Enqueue(this);
+    }
+
+    public void AddActiveVoxel(VoxelState voxel)
+    {
+        if (!activeVoxels.Contains(voxel))
+            activeVoxels.Add(voxel);
+    }
+
+    public void RemoveActiveVoxel(VoxelState voxel)
+    {
+        for (int i = 0; i < activeVoxels.Count; i++)
+        {
+            if (activeVoxels[i] == voxel)
+            {
+                activeVoxels.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     void ClearMeshData()

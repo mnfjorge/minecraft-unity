@@ -17,8 +17,9 @@ public static class VoxelData
         get { return 1f / 16f; }
     }
 
-    public static int seed;
+    public static float tickLength = 1f;
 
+    public static int seed;
     public static int WorldCentre
     {
         get { return (WorldSizeInChunks * ChunkWidth) / 2; }
